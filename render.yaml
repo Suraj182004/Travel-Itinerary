@@ -1,0 +1,21 @@
+services:
+  # Web service (FastAPI)
+  - type: web
+    name: travel-itinerary-api
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app.main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: travel-itinerary-db
+          property: connectionString
+
+# Database
+databases:
+  - name: travel-itinerary-db
+    databaseName: travel_itinerary
+    user: travel_user 
