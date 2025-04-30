@@ -13,6 +13,8 @@ services:
         fromDatabase:
           name: travel-itinerary-db
           property: connectionString
+      - key: RENDER
+        value: "true"
 
 # Database
 databases:

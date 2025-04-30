@@ -2,6 +2,7 @@ import datetime
 from sqlalchemy.orm import Session
 from app.database.models import Trip, Accommodation, Transfer, Activity
 from app.database.session import SessionLocal
+import os
 
 def seed_database():
     db = SessionLocal()
@@ -425,6 +426,11 @@ def seed_krabi_itineraries(db: Session):
     ]
     for activity in activities_5n:
         db.add(activity)
+
+# Check if we're running in Render or production environment
+if os.environ.get("RENDER") or os.environ.get("PRODUCTION"):
+    # Auto-run the seed database function when imported in production environment
+    seed_database()
 
 if __name__ == "__main__":
     seed_database()
